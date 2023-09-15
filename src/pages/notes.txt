@@ -1,0 +1,15 @@
+ON THE HOME PAGE =>
+    == make one api request for upcoming animes and render the slider 
+
+    == another api request for animes =>
+        - get the top 5 animes and render the TopAnime component
+        - from the anime api request filter animes byPopularity and render 5 PopularAnime card component
+        - display manga (2 cards) 
+
+
+Slider => upcoming 5 (try if it can be full width per slide)
+
+TopAnime
+popular
+manga
+
