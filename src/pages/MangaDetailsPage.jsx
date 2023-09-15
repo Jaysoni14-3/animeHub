@@ -8,7 +8,7 @@ export default function MangaDetailsPage() {
   useEffect(() => {
     // Call the function that gets api data
     getMangaDetails(id);
-  }, []);
+  }, [id]);
 
   console.log(mangaData);
 

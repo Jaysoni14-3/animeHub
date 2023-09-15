@@ -8,7 +8,7 @@ export default function AnimeDetailsPage() {
   useEffect(() => {
     // Call the function that gets api data
     getAnimeDetails(id);
-  }, []);
+  }, [id]);
 
   console.log(animeData);
 
