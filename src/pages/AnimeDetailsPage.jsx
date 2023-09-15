@@ -25,7 +25,10 @@ export default function AnimeDetailsPage() {
 
   return (
     <>
-      <h1 className="text-textWhite">Anime Details for {id}</h1>
+      <h1 className="text-textWhite">
+        Anime Details for{" "}
+        <strong className="text-secondaryColor">{animeData.title}</strong>
+      </h1>
     </>
   );
 }
