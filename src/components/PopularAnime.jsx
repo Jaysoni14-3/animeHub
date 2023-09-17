@@ -9,7 +9,7 @@ export default function PopularAnime({ data }) {
   }
 
   let popularAnime = getPopularAnime(data);
-  popularAnime = popularAnime?.slice(0, 5);
+  popularAnime = popularAnime?.slice(0, 6);
   // console.log(popularAnime);
 
   return (
@@ -26,9 +26,11 @@ export default function PopularAnime({ data }) {
         </div>
         <div
           className="popular-container
-                    grid gap-6 justify-between 
-                    grid-cols-[repeat(auto-fill,100%)] 
-                    min-[430px]:grid-cols-[repeat(auto-fit,185px)]
+                    grid gap-4 md:gap-6 justify-between 
+                    grid-cols-2
+                    sm:grid-cols-3
+                    md:grid-cols-4
+                    lg:grid-cols-6
                     mt-4"
         >
           {popularAnime?.map((anime) => {
@@ -46,3 +48,6 @@ export default function PopularAnime({ data }) {
     </>
   );
 }
+
+// grid-cols-[repeat(auto-fill,100%)]
+// min-[430px]:grid-cols-[repeat(auto-fit,185px)]
