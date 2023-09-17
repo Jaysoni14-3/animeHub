@@ -8,9 +8,8 @@ export default function CharacterCard({ characterDetails }) {
   });
 
   return (
-    <div className="characters-details mt-4 grid gap-2 grid-template-columns grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div className="characters-details mt-4 w-full grid gap-2 grid-template-columns grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
       {characterDetails.map((item) => {
-        console.log(item);
         return (
           <div
             key={item.character.mal_id}
@@ -19,7 +18,7 @@ export default function CharacterCard({ characterDetails }) {
           >
             <div
               id={"Test"}
-              className="character flex flex-col items-center justify-center text-center md:flex-row md:text-start md:items-start"
+              className="character flex flex-col items-start justify-center text-start md:flex-row md:text-start md:items-start"
             >
               <img
                 className="h-12 w-12 rounded-full object-center object-cover"
@@ -34,20 +33,20 @@ export default function CharacterCard({ characterDetails }) {
               </div>
             </div>
             <div
-              id={item.voice_actors[0].mal_id}
-              className="voice-artist flex flex-col items-center justify-center text-center md:flex-row-reverse md:text-end md:items-start"
+              id={item?.voice_actors[0]?.mal_id}
+              className="voice-artist flex flex-col items-end justify-center text-end md:flex-row-reverse md:text-end md:items-start"
             >
               <img
                 className="h-12 w-12 rounded-full object-center object-cover grayscale group-hover/character-card:grayscale-0 transition-all"
-                src={item.voice_actors[0].person.images.jpg.image_url}
+                src={item?.voice_actors[0]?.person?.images?.jpg?.image_url}
                 alt=""
               />
               <div className="name-and-language md:max-w-[90%] me-2">
                 <h3 className="text-textWhite">
-                  {item.voice_actors[0].person.name}
+                  {item?.voice_actors[0]?.person?.name}
                 </h3>
                 <p className="text-neutral-600">
-                  {item.voice_actors[0].language}
+                  {item?.voice_actors[0]?.language}
                 </p>
               </div>
             </div>

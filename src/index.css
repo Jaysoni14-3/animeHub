@@ -9,6 +9,18 @@ body {
   font-family: Poppins, sans-serif;
 }
 
+.anime-images::-webkit-scrollbar {
+  height: 12px;
+}
+.anime-images::-webkit-scrollbar-track {
+  background: rgb(38 38 38);
+  border-radius: 8px;
+}
+.anime-images::-webkit-scrollbar-thumb {
+  background-color: #5ac8fa;
+  border-radius: 16px;
+}
+
 .slick-dots li button:before {
   color: #ffffff;
 }

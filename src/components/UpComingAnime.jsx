@@ -12,7 +12,7 @@ export default function UpComingAnime({ data }) {
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
-    arrows: true,
+    arrows: false,
     autoplay: true,
     pauseOnHover: true,
     autoplaySpeed: 5000,
