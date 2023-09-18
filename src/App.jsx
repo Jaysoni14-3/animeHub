@@ -6,6 +6,7 @@ import MangaPage from "./pages/MangaPage";
 import SearchResults from "./pages/SearchResults";
 import AnimeDetailsPage from "./pages/AnimeDetailsPage";
 import MangaDetailsPage from "./pages/MangaDetailsPage";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/manga-details/:id" element={<MangaDetailsPage />} />
           </Routes>
         </div>
+        <Footer />
       </div>
     </>
   );

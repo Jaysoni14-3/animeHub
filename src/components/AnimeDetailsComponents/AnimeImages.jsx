@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+
+import { Zoom } from "swiper/modules";
+
 export default function AnimeImages({ id }) {
   const [animeImages, setAnimeImages] = useState([]);
 
@@ -21,18 +29,48 @@ export default function AnimeImages({ id }) {
   };
 
   return (
-    <div className="anime-images pb-2 flex gap-4 flex-row overflow-x-scroll">
-      {animeImages &&
-        animeImages.map((image, i) => {
+    <div className=" pb-2 ">
+      <Swiper
+        slidesPerView={2}
+        centeredSlides={false}
+        spaceBetween={10}
+        grabCursor={true}
+        freeMode={true}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        zoom={true}
+        pagination={false}
+        modules={[Zoom]}
+        breakpoints={{
+          600: {
+            slidesPerView: 3,
+          },
+          768: {
+            slidesPerView: 4,
+          },
+          1024: {
+            slidesPerView: 5,
+          },
+          1220: {
+            slidesPerView: 6,
+          },
+        }}
+      >
+        {animeImages.map((image, i) => {
           return (
-            <img
-              className="w-[200px] h-auto rounded-lg"
-              key={i}
-              src={image.jpg.large_image_url}
-              alt=""
-            />
+            <SwiperSlide className="select-none" key={i}>
+              <img
+                // className="w-[200px] h-auto rounded-lg"
+                className="w-[200px] object-cover rounded-lg"
+                src={image.jpg.large_image_url}
+                alt=""
+              />
+            </SwiperSlide>
           );
         })}
+      </Swiper>
     </div>
   );
 }

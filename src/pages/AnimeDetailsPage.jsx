@@ -5,28 +5,45 @@ import AnimeDetailsRight from "../components/AnimeDetailsComponents/AnimeDetails
 import AnimeDetailsLeft from "../components/AnimeDetailsComponents/AnimeDetailsLeft";
 import RelatedAnime from "../components/AnimeDetailsComponents/RelatedAnime";
 import AnimeImages from "../components/AnimeDetailsComponents/AnimeImages";
+import Modal from "../components/Modal";
 
 export default function AnimeDetailsPage() {
   const { id } = useParams();
   const [animeData, setAnimeData] = useState([]);
   const [characterDetails, setCharactersDetails] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  // TODO: Bring character details under anime overview
-  // TODO: Fix character card (no voice artist found error)
+  console.log(animeData);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    // Call the function that gets api data
     getAnimeDetails(id);
     getAnimeCharacters(id);
   }, [id]);
 
-  // console.log(characterDetails);
+  var sixCharacterCards = characterDetails?.slice(0, 6);
+
+  const openModal = () => {
+    setIsModalOpen((prev) => !prev);
+    document.body.classList.add("overflow-hidden");
+    document.body.classList.add("backdrop-blur-md");
+    window.scrollTo(0, 0);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen((prev) => !prev);
+    document.body.classList.remove("overflow-hidden");
+  };
 
   function getAnimeDetails(id) {
+    setLoading(true);
     fetch(`https://api.jikan.moe/v4/anime/${id}/full`)
       .then((response) => response.json())
       .then((results) => {
         setAnimeData(results.data);
+        // setLoading((prev) => !prev);
+        setLoading(true);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -46,7 +63,7 @@ export default function AnimeDetailsPage() {
 
   return (
     <>
-      {animeData.mal_id && (
+      {animeData?.mal_id ? (
         <>
           <section className="anime-details-page">
             <div className="anime-details-wrapper relative flex flex-col justify-between mt-4 py-8 lg:flex-row lg:gap-4">
@@ -69,10 +86,22 @@ export default function AnimeDetailsPage() {
             </div>
           </section>
           <section className="character-details mt-6">
-            <h2 className="section-header text-secondaryColor font-bold text-xl uppercase">
-              Characters & Voice Actors
-            </h2>
-            <CharacterCard characterDetails={characterDetails} />
+            <div className="flex justify-between">
+              <h2 className="section-header text-secondaryColor font-bold text-xl uppercase">
+                Characters & Voice Actors
+              </h2>
+              {characterDetails.length > 6 ? (
+                <button
+                  onClick={openModal}
+                  className="text-textWhite opacity-50 hover:opacity-100 hover:underline hover:text-skyBlue transition-all"
+                >
+                  Show all
+                </button>
+              ) : (
+                ""
+              )}
+            </div>
+            <CharacterCard characterDetails={sixCharacterCards} />
           </section>
           <section className="anime-photos mt-4">
             <h2 className="section-header mb-2 text-secondaryColor font-bold text-xl uppercase">
@@ -80,13 +109,21 @@ export default function AnimeDetailsPage() {
             </h2>
             <AnimeImages id={id} />
           </section>
-          <section className="related-anime mt-8">
-            <h2 className="section-header text-secondaryColor font-bold text-xl uppercase">
+          <section className="related-anime mt-4">
+            {/* <h2 className="section-header text-secondaryColor font-bold text-xl uppercase">
               Related Anime
-            </h2>
+            </h2> */}
             <RelatedAnime id={id} />
           </section>
+
+          <Modal
+            isOpen={isModalOpen}
+            closeModal={closeModal}
+            characterDetails={characterDetails}
+          />
         </>
+      ) : (
+        <h1>Loading ...</h1>
       )}
     </>
   );

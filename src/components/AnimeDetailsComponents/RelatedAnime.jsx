@@ -6,9 +6,8 @@ export default function RelatedAnime({ id }) {
 
   useEffect(() => {
     setTimeout(() => {
-        getRelatedAnimes(id);
-
-    }, 1000)
+      getRelatedAnimes(id);
+    }, 1000);
   }, [id]);
 
   const getRelatedAnimes = (id) => {
@@ -22,10 +21,13 @@ export default function RelatedAnime({ id }) {
       });
   };
 
-  return (
-    <div className="anime-container grid gap-4 md:gap-6 justify-between  grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 mt-4">
-      {relatedAnime &&
-        relatedAnime.slice(0, 6).map((anime) => {
+  return relatedAnime.length !== 0 ? (
+    <>
+      <h2 className="section-header text-secondaryColor font-bold text-xl uppercase">
+        Related Anime
+      </h2>
+      <div className="anime-container grid gap-4 md:gap-6 justify-between  grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 mt-4">
+        {relatedAnime.slice(0, 6).map((anime) => {
           return (
             <AnimeCard
               key={anime.entry.mal_id}
@@ -35,6 +37,9 @@ export default function RelatedAnime({ id }) {
             />
           );
         })}
-    </div>
+      </div>
+    </>
+  ) : (
+    ""
   );
 }
