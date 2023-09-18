@@ -11,7 +11,6 @@ export default function AnimeDetailsPage() {
   const { id } = useParams();
   const [animeData, setAnimeData] = useState([]);
   const [characterDetails, setCharactersDetails] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   console.log(animeData);
 
@@ -37,13 +36,10 @@ export default function AnimeDetailsPage() {
   };
 
   function getAnimeDetails(id) {
-    setLoading(true);
     fetch(`https://api.jikan.moe/v4/anime/${id}/full`)
       .then((response) => response.json())
       .then((results) => {
         setAnimeData(results.data);
-        // setLoading((prev) => !prev);
-        setLoading(true);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
