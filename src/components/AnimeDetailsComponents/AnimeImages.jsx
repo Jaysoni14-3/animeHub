@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import { Zoom } from "swiper/modules";
+import { Autoplay, Zoom } from "swiper/modules";
 
 export default function AnimeImages({ id }) {
   const [animeImages, setAnimeImages] = useState([]);
@@ -30,18 +30,17 @@ export default function AnimeImages({ id }) {
   return (
     <div className=" pb-2 ">
       <Swiper
-        slidesPerView={2}
         centeredSlides={false}
         spaceBetween={10}
         grabCursor={true}
-        freeMode={true}
+        freeMode={false}
         autoplay={{
           delay: 2500,
           disableOnInteraction: false,
         }}
         zoom={true}
         pagination={false}
-        modules={[Zoom]}
+        modules={[Zoom, Autoplay]}
         breakpoints={{
           600: {
             slidesPerView: 3,

@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import { Zoom } from "swiper/modules";
+import { Autoplay, Zoom } from "swiper/modules";
 
 export default function MangaDetailsImages({ id }) {
   const [mangaImages, setMangaImages] = useState([]);
@@ -29,7 +29,6 @@ export default function MangaDetailsImages({ id }) {
   return (
     <div className=" pb-2 ">
       <Swiper
-        slidesPerView={2}
         centeredSlides={false}
         spaceBetween={10}
         grabCursor={true}
@@ -40,7 +39,7 @@ export default function MangaDetailsImages({ id }) {
         }}
         zoom={true}
         pagination={false}
-        modules={[Zoom]}
+        modules={[Zoom, Autoplay]}
         breakpoints={{
           600: {
             slidesPerView: 3,
