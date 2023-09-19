@@ -7,20 +7,19 @@ import "swiper/css/pagination";
 
 import { Zoom } from "swiper/modules";
 
-export default function AnimeImages({ id }) {
-  const [animeImages, setAnimeImages] = useState([]);
+export default function MangaDetailsImages({ id }) {
+  const [mangaImages, setMangaImages] = useState([]);
 
   useEffect(() => {
-    getAnimeImages(id);
+    getMangaImages(id);
   }, [id]);
 
   //   console.log(animeImages);
-
-  const getAnimeImages = (id) => {
-    fetch(`https://api.jikan.moe/v4/anime/${id}/pictures `)
+  const getMangaImages = (id) => {
+    fetch(`https://api.jikan.moe/v4/manga/${id}/pictures`)
       .then((response) => response.json())
       .then((results) => {
-        setAnimeImages(results.data);
+        setMangaImages(results.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -57,7 +56,7 @@ export default function AnimeImages({ id }) {
           },
         }}
       >
-        {animeImages.map((image, i) => {
+        {mangaImages.map((image, i) => {
           return (
             <SwiperSlide className="select-none" key={i}>
               <img

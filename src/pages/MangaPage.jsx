@@ -35,7 +35,9 @@ export default function MangaPage() {
         className="manga-container
                   grid gap-6 justify-between 
                   grid-cols-[repeat(auto-fill,100%)] 
-                  min-[530px]:grid-cols-[1fr,1fr,1fr,1fr]
+                  min-[450px]:grid-cols-[1fr,1fr]
+                  min-[530px]:grid-cols-[1fr,1fr,1fr]
+                  min-[760px]:grid-cols-[1fr,1fr,1fr,1fr]
                   mt-4"
       >
         {mangaData?.map((manga) => {

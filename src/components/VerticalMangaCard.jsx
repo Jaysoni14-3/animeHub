@@ -27,14 +27,20 @@ export default function VerticalMangaCard({
             {title}
           </p>
           <div className="rank-rating-container flex items-center">
-            <label className="font-thin text-neutral-400 opacity-80 me-2">
-              Rank :{" "}
-            </label>
-            <p>{rank}</p>
+            {rank && (
+              <div className="rank flex items-center">
+                <label className="font-thin text-neutral-400 opacity-80 me-2">
+                  Rank :{" "}
+                </label>
+                <p>{rank}</p>
+              </div>
+            )}
             {score && (
-              <p className="flex items-center text-neutral-400 ms-auto">
-                <FaStar className="me-1 text-secondaryColor" /> {score}
-              </p>
+              <div className="score ms-auto">
+                <p className="flex items-center text-neutral-400 ">
+                  <FaStar className="me-1 text-secondaryColor" /> {score}
+                </p>
+              </div>
             )}
           </div>
         </div>

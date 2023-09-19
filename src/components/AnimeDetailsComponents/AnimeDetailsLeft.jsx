@@ -28,16 +28,16 @@ export default function AnimeDetailsLeft({ animeData }) {
           {/* Anime title */}
           <div className="title">
             {animeData.title ? (
-              <h1 className="text-textWhite text-3xl text-center font-semibold">
+              <h1 className="text-textWhite text-3xl text-start font-semibold">
                 {animeData?.title}
               </h1>
             ) : (
-              <h1 className="text-textWhite text-2xl text-center font-semibold">
+              <h1 className="text-textWhite text-2xl text-start font-semibold">
                 {animeData?.titles[0].title}
               </h1>
             )}
           </div>
-          <div className="additional-info mt-2 flex flex-wrap items-center gap-2">
+          <div className="additional-info mt-2 flex flex-wrap gap-2">
             {/* Ratings */}
             <div className="rating">
               {animeData.rating && (
