@@ -68,11 +68,13 @@ export default function AnimeDetailsPage() {
       });
   }
 
+  // Add an anime to the list and push it to the local storage
   function addToList() {
     const animeToAdd = {
       animeId: animeData.mal_id,
       animeImage: animeData.images.jpg.large_image_url,
       animeName: animeData.title ? animeData.title : animeData.titles[0].title,
+      status: false,
     };
 
     // Check if it already exists in our local storage
@@ -84,10 +86,11 @@ export default function AnimeDetailsPage() {
     if (!isDuplicate) {
       animeList.push(animeToAdd);
       localStorage.setItem("ANIME_WATCH_LIST", JSON.stringify(animeList));
+      window.location.href = `/anime-details/${id}`;
     }
     // else change the button text to "already in list"
     else {
-      console.log("anime already in your watch list");
+      alert("anime already in your watch list");
     }
   }
 

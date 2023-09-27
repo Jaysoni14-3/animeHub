@@ -10,6 +10,8 @@ export default function AnimeDetailsLeft({
 }) {
   const [showMore, setShowMore] = useState(false);
 
+  id = parseInt(id);
+
   function handleTrailerBtn() {
     window.open(
       `https://www.youtube.com/watch?v=${animeData.trailer.youtube_id}`
@@ -20,7 +22,8 @@ export default function AnimeDetailsLeft({
     setShowMore((prev) => !prev);
   }
 
-  const isAnimeAdded = animeList.find((anime) => id == anime.animeId);
+  // To check if this anime is already present in the users localstorage
+  const isAnimeAdded = animeList.some((anime) => anime.animeId === id);
 
   return (
     <div className="anime-detail-left-wrapper flex flex-col items-start">
@@ -78,7 +81,7 @@ export default function AnimeDetailsLeft({
             </button>
             {/* Add button */}
             {isAnimeAdded ? (
-              <button className="flex items-center gap-2 px-4 py-2 rounded-lg text-white bg-green-600 hover:bg-green-700 transition">
+              <button className="flex items-center gap-2 px-4 py-2 rounded-lg text-white bg-green-600 hover:bg-green-600 transition">
                 <BsCheck className="text-2xl" /> Added to watch list
               </button>
             ) : (

@@ -1,3 +1,6 @@
+import CompletedList from "../components/WatchListComponents/CompletedList";
+import WatchList from "../components/WatchListComponents/WatchList";
+
 export default function WatchListPage() {
   var animeList;
 
@@ -8,52 +11,80 @@ export default function WatchListPage() {
     animeList = [];
   }
 
+  // console.log(animeList);
+
+  const watchListArray = animeList.filter((anime) => anime.status === false);
+  const completedArray = animeList.filter((anime) => anime.status === true);
+
+  // Change the status anime if completed watching
+  const changeStatus = (e) => {
+    var selectedAnimeId = parseInt(e.target.id);
+    var newArray = animeList.map((anime) =>
+      anime.animeId === selectedAnimeId
+        ? { ...anime, status: !anime.status }
+        : anime
+    );
+
+    localStorage.setItem("ANIME_WATCH_LIST", JSON.stringify(newArray));
+    window.location.href = "/watch-list";
+  };
+
+  // Remove an anime from the list
+  const removeFromWatchList = (e) => {
+    var selectedAnimeId = parseInt(e.target.id);
+    const confirmMessage = window.confirm(
+      "Hello!\nAre you sure you want to delete this item? This action cannot be undone."
+    );
+
+    if (confirmMessage) {
+      var newArray = animeList.filter(
+        (anime) => anime.animeId !== selectedAnimeId
+      );
+      alert("Anime removed form your watch list");
+      window.location.href = "/watch-list";
+    } else {
+      return;
+    }
+
+    localStorage.setItem("ANIME_WATCH_LIST", JSON.stringify(newArray));
+  };
+
   return (
     <>
       {animeList.length !== 0 ? (
-        <section className="watch-list mt-4">
-          <div className="section-header mt-2 mb-2">
-            <h1 className="text-xl text-textWhite uppercase">
-              Your watch List
-            </h1>
-          </div>
-          <div className="section-body-test grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {animeList?.map((anime) => (
-              <div
-                className="group/anime-card hover:bg-neutral-800 ease-in-out flex border border-neutral-500 hover:boreder-neutral-100 hover:shadow-lg rounded-lg overflow-hidden"
-                key={anime.animeId}
-              >
-                <img
-                  src={anime.animeImage}
-                  className="w-24 object-cover group-hover/anime-card:scale-105 transition-all ease-in-out"
-                  alt={anime.animeName}
-                />
-                <div className="card-body p-2 flex flex-col">
-                  <a
-                    href={`/anime-details/${anime.animeId}`}
-                    className="anime-name text-textWhite"
-                  >
-                    {anime.animeName}
-                  </a>
-                  <div className="button-container hidden group-hover/anime-card:flex flex-col sm:flex-row gap-2 mt-auto ease-in-out">
-                    <button className="flex text-center gap-2 px-4 py-2 rounded-lg text-textWhite font-thin text-sm border border-green-600 hover:bg-neutral-700 transition">
-                      Completed
-                    </button>
-                    <button className="flex text-center gap-2 px-4 py-2 rounded-lg text-textWhite font-thin text-sm border border-red-600 hover:bg-neutral-700 transition">
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+        <>
+          {watchListArray?.length !== 0 ? (
+            <WatchList
+              removeFromWatchList={removeFromWatchList}
+              animeList={animeList}
+              changeStatus={changeStatus}
+            />
+          ) : (
+            ""
+          )}
+          {completedArray?.length !== 0 ? (
+            <CompletedList
+              removeFromWatchList={removeFromWatchList}
+              completedArray={completedArray}
+              changeStatus={changeStatus}
+            />
+          ) : (
+            ""
+          )}
+        </>
       ) : (
-        <p>You have no anime added to your watch list</p>
+        <div className="flex flex-col items-center justify-center mt-10">
+          <p className="text-textWhite my-10">
+            You have no anime added to your watch list
+          </p>
+          <button
+            onClick={() => (window.location.href = "/anime")}
+            className="px-4 py-2 rounded-lg bg-secondaryColor hover:bg-[#ffe657] transition"
+          >
+            Explore animes
+          </button>
+        </div>
       )}
     </>
   );
-}
-
-{
 }
