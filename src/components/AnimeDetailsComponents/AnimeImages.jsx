@@ -11,7 +11,9 @@ export default function AnimeImages({ id }) {
   const [animeImages, setAnimeImages] = useState([]);
 
   useEffect(() => {
-    getAnimeImages(id);
+    setTimeout(() => {
+      getAnimeImages(id);
+    }, 1000);
   }, [id]);
 
   //   console.log(animeImages);
@@ -30,6 +32,7 @@ export default function AnimeImages({ id }) {
   return (
     <div className=" pb-2 ">
       <Swiper
+        slidesPerView={2}
         centeredSlides={false}
         spaceBetween={10}
         grabCursor={true}
@@ -56,7 +59,7 @@ export default function AnimeImages({ id }) {
           },
         }}
       >
-        {animeImages.map((image, i) => {
+        {animeImages?.map((image, i) => {
           return (
             <SwiperSlide className="select-none" key={i}>
               <img

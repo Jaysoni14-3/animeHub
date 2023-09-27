@@ -7,11 +7,12 @@ import SearchResults from "./pages/SearchResults";
 import AnimeDetailsPage from "./pages/AnimeDetailsPage";
 import MangaDetailsPage from "./pages/MangaDetailsPage";
 import Footer from "./components/Footer";
+import WatchListPage from "./pages/WatchListPage";
 
 function App() {
   return (
     <>
-      <div>
+      <div className="flex flex-col min-h-screen">
         <Header />
         <div className="body-container container max-w-screen-xl mx-auto mb-8 px-4 xl:px-0">
           <Routes>
@@ -21,9 +22,12 @@ function App() {
             <Route path="/manga" element={<MangaPage />} />
             <Route path="/anime-details/:id" element={<AnimeDetailsPage />} />
             <Route path="/manga-details/:id" element={<MangaDetailsPage />} />
+            <Route path="/watch-list" element={<WatchListPage />} />
           </Routes>
         </div>
+        <div className="footer mt-auto">
         <Footer />
+        </div>
       </div>
     </>
   );

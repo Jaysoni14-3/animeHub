@@ -9,6 +9,29 @@ export function Header() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const NavLinks = [
+    {
+      id: 1,
+      linkName: "Home",
+      linkHref: "/",
+    },
+    {
+      id: 2,
+      linkName: "Anime",
+      linkHref: "/anime",
+    },
+    {
+      id: 3,
+      linkName: "Manga",
+      linkHref: "/manga",
+    },
+    {
+      id: 4,
+      linkName: "Watch List",
+      linkHref: "/watch-list",
+    },
+  ];
+
   function handleClick(e) {
     e.preventDefault();
     navigate(`/search`, { state: { query: searchText } });
@@ -49,46 +72,23 @@ export function Header() {
               : "responsive-nav flex ms-auto flex-row items-center w-full max-[680px]:hidden"
           }`}
         >
-          <div className="nav-links flex flex-col items-end text-sm text-neutral-400 min-[680px]:flex-row min-[680px]:items-center min-[680px]:ms-auto min-[680px]:me-auto">
-            <li className="list-none px-2 py-4 min-[680px]:p-0">
-              <a
-                className={`${
-                  location.pathname === "/"
-                    ? "text-skyBlue border-b border-skyBlue"
-                    : ""
-                } py-2`}
-                href="/"
-              >
-                Home
+          <div className="nav-links flex flex-col items-end text-sm text-neutral-400 min-[680px]:flex-row min-[680px]:items-center min-[680px]:ms-auto  min-[680px]:me-auto">
+            {NavLinks.map((link) => (
+              <a key={link.id} href={link.linkHref}>
+                <li
+                  className={`${
+                    location.pathname === link.linkHref
+                      ? "text-skyBlue bg-neutral-800"
+                      : ""
+                  } list-none px-4 rounded py-2`}
+                >
+                  {link.linkName}
+                </li>
               </a>
-            </li>
-            <li className="list-none px-2 py-4 min-[680px]:p-0 min-[680px]:ms-8">
-              <a
-                className={`${
-                  location.pathname === "/anime"
-                    ? "text-skyBlue border-b border-skyBlue"
-                    : ""
-                } py-2`}
-                href="/anime"
-              >
-                Anime
-              </a>
-            </li>
-            <li className="list-none px-2 py-4 min-[680px]:p-0 cursor-pointer min-[680px]:ms-8">
-              <a
-                className={`${
-                  location.pathname === "/manga"
-                    ? "text-skyBlue border-b border-skyBlue"
-                    : ""
-                } py-2`}
-                href="/manga"
-              >
-                Manga
-              </a>
-            </li>
+            ))}
           </div>
           <form onSubmit={handleSubmit}>
-            <div className="search-bar h-10 relative flex">
+            <div className="search-bar h-10 max-[680px]:mt-4 relative flex">
               <input
                 className="rounded-lg ps-3 pe-2 py-1 rounded-tr-none rounded-br-none bg-neutral-200 text-textBlack focus:outline shadow-lg"
                 type="text"

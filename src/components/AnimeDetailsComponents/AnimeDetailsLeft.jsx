@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { FaPlay, FaPlus } from "react-icons/fa";
+import { BsCheck } from "react-icons/bs";
 
-export default function AnimeDetailsLeft({ animeData }) {
+export default function AnimeDetailsLeft({
+  animeData,
+  addToList,
+  animeList,
+  id,
+}) {
   const [showMore, setShowMore] = useState(false);
 
   function handleTrailerBtn() {
@@ -13,6 +19,8 @@ export default function AnimeDetailsLeft({ animeData }) {
   function handleShowMore() {
     setShowMore((prev) => !prev);
   }
+
+  const isAnimeAdded = animeList.find((anime) => id == anime.animeId);
 
   return (
     <div className="anime-detail-left-wrapper flex flex-col items-start">
@@ -37,7 +45,7 @@ export default function AnimeDetailsLeft({ animeData }) {
               </h1>
             )}
           </div>
-          <div className="additional-info mt-2 flex flex-wrap gap-2">
+          <div className="additional-info mt-2 flex items-center flex-wrap gap-2">
             {/* Ratings */}
             <div className="rating">
               {animeData.rating && (
@@ -59,20 +67,28 @@ export default function AnimeDetailsLeft({ animeData }) {
               )}
             </div>
           </div>
-          <div className="btn-container mt-2 flex gap-2 text-textBlack">
+          <div className="btn-container mt-2 flex flex-col min-[450px]:flex-row gap-2 text-textBlack">
             {/* traile Button */}
             <button
               onClick={handleTrailerBtn}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondaryColor"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-secondaryColor hover:bg-[#ffe657] transition"
             >
               <FaPlay />
               Trailer
             </button>
             {/* Add button */}
-            <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white ">
-              <FaPlus />
-              Add to list
-            </button>
+            {isAnimeAdded ? (
+              <button className="flex items-center gap-2 px-4 py-2 rounded-lg text-white bg-green-600 hover:bg-green-700 transition">
+                <BsCheck className="text-2xl" /> Added to watch list
+              </button>
+            ) : (
+              <button
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white hover:bg-neutral-200 transition"
+                onClick={() => addToList()}
+              >
+                <FaPlus /> Add to list
+              </button>
+            )}
           </div>
           {/* Anime Overview  */}
           <div className="overview mt-4 lg:pe-10">

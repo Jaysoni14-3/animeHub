@@ -10,17 +10,28 @@ import Modal from "../components/Modal";
 export default function AnimeDetailsPage() {
   const { id } = useParams();
   const [animeData, setAnimeData] = useState([]);
+  // console.log(animeData);
   const [characterDetails, setCharactersDetails] = useState([]);
-
-  console.log(animeData);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  var animeList;
+  // JSON.parse(localStorage.getItem("ANIME_WATCH_LIST")) || [];
+
+  if (localStorage.getItem("ANIME_WATCH_LIST") !== null) {
+    animeList = JSON.parse(localStorage.getItem("ANIME_WATCH_LIST"));
+  } else {
+    console.log("ANIME_WATCH_LIST has nothing in it");
+    animeList = [];
+  }
+
+  // console.log(animeList);
 
   useEffect(() => {
     getAnimeDetails(id);
     getAnimeCharacters(id);
   }, [id]);
 
+  // only send 6 character details
   var sixCharacterCards = characterDetails?.slice(0, 6);
 
   const openModal = () => {
@@ -57,6 +68,29 @@ export default function AnimeDetailsPage() {
       });
   }
 
+  function addToList() {
+    const animeToAdd = {
+      animeId: animeData.mal_id,
+      animeImage: animeData.images.jpg.large_image_url,
+      animeName: animeData.title ? animeData.title : animeData.titles[0].title,
+    };
+
+    // Check if it already exists in our local storage
+    const isDuplicate = animeList.some(
+      (anime) => anime.animeId === animeToAdd.animeId
+    );
+
+    // if its not found in our local storage then add it to local storage
+    if (!isDuplicate) {
+      animeList.push(animeToAdd);
+      localStorage.setItem("ANIME_WATCH_LIST", JSON.stringify(animeList));
+    }
+    // else change the button text to "already in list"
+    else {
+      console.log("anime already in your watch list");
+    }
+  }
+
   return (
     <>
       {animeData?.mal_id ? (
@@ -76,7 +110,12 @@ export default function AnimeDetailsPage() {
                 }}
               ></div>
               {/* Left side */}
-              <AnimeDetailsLeft animeData={animeData} />
+              <AnimeDetailsLeft
+                animeData={animeData}
+                addToList={addToList}
+                animeList={animeList}
+                id={id}
+              />
               {/* Right side */}
               <AnimeDetailsRight animeData={animeData} />
             </div>
@@ -86,7 +125,7 @@ export default function AnimeDetailsPage() {
               <h2 className="section-header text-secondaryColor font-bold text-xl uppercase">
                 Characters & Voice Actors
               </h2>
-              {characterDetails.length > 6 ? (
+              {characterDetails?.length > 6 ? (
                 <button
                   onClick={openModal}
                   className="text-textWhite opacity-50 hover:opacity-100 hover:underline hover:text-skyBlue transition-all"
