@@ -20,7 +20,7 @@ export default function AnimeDetailsPage() {
   if (localStorage.getItem("ANIME_WATCH_LIST") !== null) {
     animeList = JSON.parse(localStorage.getItem("ANIME_WATCH_LIST"));
   } else {
-    console.log("ANIME_WATCH_LIST has nothing in it");
+    // console.log("ANIME_WATCH_LIST has nothing in it");
     animeList = [];
   }
 
@@ -68,32 +68,6 @@ export default function AnimeDetailsPage() {
       });
   }
 
-  // Add an anime to the list and push it to the local storage
-  function addToList() {
-    const animeToAdd = {
-      animeId: animeData.mal_id,
-      animeImage: animeData.images.jpg.large_image_url,
-      animeName: animeData.title ? animeData.title : animeData.titles[0].title,
-      status: false,
-    };
-
-    // Check if it already exists in our local storage
-    const isDuplicate = animeList.some(
-      (anime) => anime.animeId === animeToAdd.animeId
-    );
-
-    // if its not found in our local storage then add it to local storage
-    if (!isDuplicate) {
-      animeList.push(animeToAdd);
-      localStorage.setItem("ANIME_WATCH_LIST", JSON.stringify(animeList));
-      window.location.href = `/anime-details/${id}`;
-    }
-    // else change the button text to "already in list"
-    else {
-      alert("anime already in your watch list");
-    }
-  }
-
   return (
     <>
       {animeData?.mal_id ? (
@@ -115,7 +89,6 @@ export default function AnimeDetailsPage() {
               {/* Left side */}
               <AnimeDetailsLeft
                 animeData={animeData}
-                addToList={addToList}
                 animeList={animeList}
                 id={id}
               />
@@ -123,24 +96,26 @@ export default function AnimeDetailsPage() {
               <AnimeDetailsRight animeData={animeData} />
             </div>
           </section>
-          <section className="character-details mt-6">
-            <div className="flex justify-between">
-              <h2 className="section-header text-secondaryColor font-bold text-xl uppercase">
-                Characters & Voice Actors
-              </h2>
-              {characterDetails?.length > 6 ? (
-                <button
-                  onClick={openModal}
-                  className="text-textWhite opacity-50 hover:opacity-100 hover:underline hover:text-skyBlue transition-all"
-                >
-                  Show all
-                </button>
-              ) : (
-                ""
-              )}
-            </div>
-            <CharacterCard characterDetails={sixCharacterCards} />
-          </section>
+          {sixCharacterCards && (
+            <section className="character-details mt-6">
+              <div className="flex justify-between">
+                <h2 className="section-header text-secondaryColor font-bold text-xl uppercase">
+                  Characters & Voice Actors
+                </h2>
+                {characterDetails?.length > 6 ? (
+                  <button
+                    onClick={openModal}
+                    className="text-textWhite opacity-50 hover:opacity-100 hover:underline hover:text-skyBlue transition-all"
+                  >
+                    Show all
+                  </button>
+                ) : (
+                  ""
+                )}
+              </div>
+              <CharacterCard characterDetails={sixCharacterCards} />
+            </section>
+          )}
           <section className="anime-photos mt-4">
             <h2 className="section-header mb-2 text-secondaryColor font-bold text-xl uppercase">
               Images

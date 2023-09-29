@@ -12,7 +12,7 @@ export default function MangaDetailsPage() {
     // Call the function that gets api data
     getMangaDetails(id);
   }, [id]);
-  console.log(mangaData);
+  // console.log(mangaData);
 
   function handleShowMore() {
     setShowMore((prev) => !prev);
@@ -197,11 +197,11 @@ export default function MangaDetailsPage() {
               {mangaData.genres && (
                 <div className="flex items-start flex-wrap gap-2">
                   <label className="text-neutral-400">Genres:</label>
-                  <div className="genre-container flex flex-wrap">
+                  <div className="genre-container flex flex-wrap gap-1">
                     {mangaData.genres.map((genre) => (
                       <p
                         key={genre.mal_id}
-                        className="me-1 px-2 py-1 text-sm font-[100] bg-neutral-600 rounded-full hover:text-secondaryColor cursor-default"
+                        className="px-2 py-1 text-sm font-[100] bg-neutral-600 rounded-full hover:text-secondaryColor cursor-default"
                       >
                         {genre.name}
                       </p>

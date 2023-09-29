@@ -27,7 +27,7 @@ export default function RelatedAnime({ id }) {
         Related Anime
       </h2>
       <div className="anime-container grid gap-4 md:gap-6 justify-between  grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 mt-4">
-        {relatedAnime.slice(0, 6).map((anime) => {
+        {relatedAnime?.slice(0, 6).map((anime) => {
           return (
             <AnimeCard
               key={anime.entry.mal_id}

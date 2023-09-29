@@ -10,7 +10,7 @@ export default function RelatedManga({ id }) {
     }, 1000);
   }, [id]);
 
-  console.log(relatedManga);
+  // console.log(relatedManga);
 
   const getRelatedAnimes = (id) => {
     fetch(`https://api.jikan.moe/v4/manga/${id}/recommendations`)

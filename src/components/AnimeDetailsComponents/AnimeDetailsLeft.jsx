@@ -1,16 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaPlay, FaPlus } from "react-icons/fa";
 import { BsCheck } from "react-icons/bs";
 
-export default function AnimeDetailsLeft({
-  animeData,
-  addToList,
-  animeList,
-  id,
-}) {
+export default function AnimeDetailsLeft({ animeData, animeList, id }) {
   const [showMore, setShowMore] = useState(false);
+  const [buttonText, setButtonText] = useState("Add to list");
 
   id = parseInt(id);
+
+  // To check if his anime is already present in the users localstorage
+  const isAnimeAdded = animeList.some((anime) => anime.animeId === id);
+
+  useEffect(() => {
+    if (!isAnimeAdded) {
+      setButtonText(() => "Add to list");
+    } else {
+      setButtonText(() => "Added to watch list");
+    }
+  }, [isAnimeAdded]);
 
   function handleTrailerBtn() {
     window.open(
@@ -22,12 +29,35 @@ export default function AnimeDetailsLeft({
     setShowMore((prev) => !prev);
   }
 
-  // To check if this anime is already present in the users localstorage
-  const isAnimeAdded = animeList.some((anime) => anime.animeId === id);
+  // Add an anime to the list and push it to the local storage
+  function addToList() {
+    const animeToAdd = {
+      animeId: animeData.mal_id,
+      animeImage: animeData.images.jpg.large_image_url,
+      animeName: animeData.title ? animeData.title : animeData.titles[0].title,
+      status: false,
+    };
+
+    // if its not found in our local storage then add it to local storage
+    if (isAnimeAdded === false) {
+      animeList.push(animeToAdd);
+      localStorage.setItem("ANIME_WATCH_LIST", JSON.stringify(animeList));
+      setButtonText(() => "Added to watch list");
+    } else if (isAnimeAdded === true) {
+      console.log("anime already in your watch list");
+      setButtonText(() => "Added to watch list");
+      window.location.href = `/watch-list`;
+    }
+  }
+
+  // Add class to button conditionally
+  const buttonClassName = isAnimeAdded
+    ? "text-white bg-green-600 hover:bg-green-600"
+    : "bg-white hover:bg-neutral-200";
 
   return (
     <div className="anime-detail-left-wrapper flex flex-col items-start">
-      <div className="anime-details-left-top-section flex max-[570px]:flex-col min-[570px]:gap-2 lg:gap-4 mb-4">
+      <div className="anime-details-left-top-section w-full flex max-[570px]:flex-col max-[570px]:mx-auto min-[570px]:gap-2 lg:gap-4 mb-4">
         <div className="anime-poster flex h-[207px] min-[570px]:flex-col min-[570px]:h-[266px] min-w-[200px]">
           <img
             className="h-full mx-auto w-max"
@@ -35,11 +65,11 @@ export default function AnimeDetailsLeft({
             alt={animeData.title}
           />
         </div>
-        <div className="anime-details mt-4 flex flex-col items-center min-[570px]:mt-0 min-[570px]:items-start min-[570px]  text-textWhite">
+        <div className="anime-details mt-4 flex flex-col items-center min-[570px]:mt-0 min-[570px]:items-start min-[570px] text-textWhite">
           {/* Anime title */}
           <div className="title">
             {animeData.title ? (
-              <h1 className="text-textWhite text-3xl text-start font-semibold">
+              <h1 className="text-textWhite text-3xl text-center min-[570px]:text-start font-semibold">
                 {animeData?.title}
               </h1>
             ) : (
@@ -80,21 +110,16 @@ export default function AnimeDetailsLeft({
               Trailer
             </button>
             {/* Add button */}
-            {isAnimeAdded ? (
-              <button className="flex items-center gap-2 px-4 py-2 rounded-lg text-white bg-green-600 hover:bg-green-600 transition">
-                <BsCheck className="text-2xl" /> Added to watch list
-              </button>
-            ) : (
-              <button
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white hover:bg-neutral-200 transition"
-                onClick={() => addToList()}
-              >
-                <FaPlus /> Add to list
-              </button>
-            )}
+            <button
+              className={`${buttonClassName} flex items-center gap-2 px-4 py-2 rounded-lg transition}`}
+              onClick={() => addToList()}
+            >
+              {isAnimeAdded ? <BsCheck className="text-2xl" /> : <FaPlus />}{" "}
+              {buttonText}
+            </button>
           </div>
           {/* Anime Overview  */}
-          <div className="overview mt-4 lg:pe-10">
+          <div className="overview mt-4 w-full lg:pe-10">
             {animeData.synopsis && (
               <>
                 <label className="text-neutral-300">Overview:</label>
