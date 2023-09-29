@@ -6,7 +6,9 @@ export default function TopAnime({ data }) {
     <>
       <section className="mt-10 mb-10">
         <div className="section-header flex items-center justify-between">
-          <h2 className="text-textWhite uppercase text-xl">Top Anime</h2>
+          <h2 className="text-neutral-300 font-bold select-none tracking-wide uppercase text-xl">
+            Top Anime
+          </h2>
           <a
             href="/anime"
             className="text-textWhite opacity-50 hover:opacity-100 hover:underline hover:text-skyBlue transition-all"
@@ -38,7 +40,3 @@ export default function TopAnime({ data }) {
     </>
   );
 }
-
-// grid-cols-[repeat(auto-fill,100%)]
-// min-[430px]:grid-cols-6
-// min-[430px]:grid-cols-[repeat(auto-fit,185px)]

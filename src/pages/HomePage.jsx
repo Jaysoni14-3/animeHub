@@ -3,19 +3,23 @@ import PopularAnime from "../components/PopularAnime";
 import TopAnime from "../components/TopAnime";
 import UpComingAnime from "../components/UpComingAnime";
 import Manga from "../components/Manga";
-
-/*
-Check this link for homepage design inspiration
-    https://dribbble.com/shots/6823172-Anime-Streaming-Service-Design 
-*/
+import HomePageSkeleton from "../components/HomePageSkeleton";
 
 export default function HomePage() {
-  // data for TopAnime RecommendedAnimes PopularAnime
+  // data for TopAnime RecommendedAnimes PopularAnime is filtered from animeData
   const [animeData, setAnimeData] = useState([]);
 
   // data for upcoming component
   const [upComingAnime, setUpcomingAnime] = useState([]);
+
+  // data for manga component
   const [mangaData, setMangaData] = useState([]);
+
+  const [animeLoading, setAnimeLoading] = useState(false);
+  const [upcommingloading, setUpcommingLoading] = useState(false);
+  const [mangaLoading, setMangaLoading] = useState(false);
+
+  const [apiError, setApiError] = useState(false);
 
   useEffect(() => {
     getAnimeData();
@@ -24,11 +28,21 @@ export default function HomePage() {
   }, []);
 
   function getAnimeData() {
+    setAnimeLoading(true);
     fetch("https://api.jikan.moe/v4/top/anime")
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 429) {
+          console.log("429 occurred");
+          setApiError(true);
+        } else if (response.ok) {
+          setAnimeLoading(false);
+          setApiError(false);
+          return response.json();
+        }
+      })
       .then((result) => {
-        // setTopAnime(result?.data?.slice(0, 5));
         setAnimeData(result?.data);
+        // setAnimeLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -36,10 +50,21 @@ export default function HomePage() {
   }
 
   function getUpcomingAnimes() {
+    setUpcommingLoading(true);
     fetch("https://api.jikan.moe/v4/seasons/upcoming?limit=12")
-      .then((res) => res.json())
-      .then((res) => {
-        setUpcomingAnime(res?.data);
+      .then((response) => {
+        if (response.status === 429) {
+          console.log("429 occurred");
+          setApiError(true);
+        } else if (response.ok) {
+          setUpcommingLoading(false);
+          setApiError(false);
+          return response.json();
+        }
+      })
+      .then((result) => {
+        setUpcomingAnime(result?.data);
+        setUpcommingLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -47,10 +72,21 @@ export default function HomePage() {
   }
 
   function getManga() {
+    setMangaLoading(true);
     fetch("https://api.jikan.moe/v4/manga")
-      .then((res) => res.json())
-      .then((res) => {
-        setMangaData(res?.data);
+      .then((response) => {
+        if (response.status === 429) {
+          console.log("429 occurred");
+          setApiError(true);
+        } else if (response.ok) {
+          setMangaLoading(false);
+          setApiError(false);
+          return response.json();
+        }
+      })
+      .then((result) => {
+        setMangaData(result?.data);
+        setMangaLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -59,10 +95,31 @@ export default function HomePage() {
 
   return (
     <>
-      <UpComingAnime data={upComingAnime} />
-      <TopAnime data={animeData} />
-      <PopularAnime data={animeData} />
-      <Manga data={mangaData} />
+      {apiError ? (
+        <div className="flex flex-col items-center justify-center h-[32rem]">
+          <h1 className="text-3xl text-textWhite">
+            An error occured while loading the page
+          </h1>
+          <span className="text-neutral-400 mt-4 mb-2">
+            Please reload the page or press the button below
+          </span>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 rounded text-lg text-textBlack bg-secondaryColor hover:bg-[rgb(255,233,108)] ease-in-out"
+          >
+            Reload
+          </button>
+        </div>
+      ) : animeLoading || upcommingloading || mangaLoading ? (
+        <HomePageSkeleton />
+      ) : (
+        <>
+          <UpComingAnime data={upComingAnime} />
+          <TopAnime data={animeData} />
+          <PopularAnime data={animeData} />
+          <Manga data={mangaData} />
+        </>
+      )}
     </>
   );
 }

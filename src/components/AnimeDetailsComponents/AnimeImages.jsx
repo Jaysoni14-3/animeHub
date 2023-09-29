@@ -13,7 +13,7 @@ export default function AnimeImages({ id }) {
   useEffect(() => {
     setTimeout(() => {
       getAnimeImages(id);
-    }, 1000);
+    }, 1500);
   }, [id]);
 
   //   console.log(animeImages);

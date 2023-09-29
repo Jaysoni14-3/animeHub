@@ -49,7 +49,7 @@ export default function UpComingAnime({ data }) {
     <>
       <section className="mt-6 mb-4">
         <div className="section-header flex items-justify-between">
-          <h2 className="text-textWhite uppercase text-xl">
+          <h2 className="text-neutral-300 font-bold select-none tracking-wide uppercase text-xl">
             Upcomming this season
           </h2>
         </div>

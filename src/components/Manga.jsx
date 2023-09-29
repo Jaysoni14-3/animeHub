@@ -6,7 +6,9 @@ export default function Manga({ data }) {
     <>
       <section className="mt-10 mb-10">
         <div className="section-header flex items-center justify-between">
-          <h2 className="text-textWhite uppercase text-xl">Manga</h2>
+          <h2 className="text-neutral-300 font-bold select-none tracking-wide uppercase text-xl">
+            Manga
+          </h2>
           <a
             href="/manga"
             className="text-textWhite opacity-50 hover:opacity-100 hover:underline hover:text-skyBlue transition-all"

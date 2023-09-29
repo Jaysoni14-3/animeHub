@@ -13,3 +13,47 @@ TopAnime
 popular
 manga
 
+
+
+
+Working code for homepage api calls
+ ==>
+  function getAnimeData() {
+    setAnimeLoading(true);
+    fetch("https://api.jikan.moe/v4/top/anime")
+      .then((response) => response.json())
+      .then((result) => {
+        setAnimeData(result?.data);
+        setAnimeLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }
+
+  function getUpcomingAnimes() {
+    setUpcommingLoading(true);
+    fetch("https://api.jikan.moe/v4/seasons/upcoming?limit=12")
+      .then((response) => response.json())
+      .then((result) => {
+        setUpcomingAnime(result?.data);
+        setUpcommingLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }
+
+  function getManga() {
+    setMangaLoading(true);
+    fetch("https://api.jikan.moe/v4/manga")
+      .then((response) => response.json())
+      .then((result) => {
+        setMangaData(result?.data);
+        setMangaLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }
+  <== Homepage api call ends here
