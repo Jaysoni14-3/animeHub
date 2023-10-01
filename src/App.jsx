@@ -21,12 +21,13 @@ function App() {
             <Route path="/search" element={<SearchResults />} />
             <Route path="/manga" element={<MangaPage />} />
             <Route path="/anime-details/:id" element={<AnimeDetailsPage />} />
+
             <Route path="/manga-details/:id" element={<MangaDetailsPage />} />
             <Route path="/watch-list" element={<WatchListPage />} />
           </Routes>
         </div>
         <div className="footer mt-auto">
-        <Footer />
+          <Footer />
         </div>
       </div>
     </>

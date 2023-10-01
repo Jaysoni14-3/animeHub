@@ -3,7 +3,7 @@ import PopularAnime from "../components/PopularAnime";
 import TopAnime from "../components/TopAnime";
 import UpComingAnime from "../components/UpComingAnime";
 import Manga from "../components/Manga";
-import HomePageSkeleton from "../components/HomePageSkeleton";
+import HomePageSkeleton from "./Skeleton-pages/HomePageSkeleton";
 
 export default function HomePage() {
   // data for TopAnime RecommendedAnimes PopularAnime is filtered from animeData
@@ -94,6 +94,11 @@ export default function HomePage() {
   }
 
   return (
+    /*If 
+      the api sends an error of exiding limit render an button that reloads the page
+    else
+      render the skeleton page while the page is being loaded when the page has finished loading render the components
+    */
     <>
       {apiError ? (
         <div className="flex flex-col items-center justify-center h-[32rem]">

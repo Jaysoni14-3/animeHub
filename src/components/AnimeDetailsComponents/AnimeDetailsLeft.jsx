@@ -61,14 +61,14 @@ export default function AnimeDetailsLeft({ animeData, animeList, id }) {
         <div className="anime-poster flex h-[207px] min-[570px]:flex-col min-[570px]:h-[266px] min-w-[200px]">
           <img
             className="h-full mx-auto w-max"
-            src={animeData.images.jpg.large_image_url}
+            src={animeData?.images?.jpg?.large_image_url}
             alt={animeData.title}
           />
         </div>
         <div className="anime-details mt-4 flex flex-col items-center min-[570px]:mt-0 min-[570px]:items-start min-[570px] text-textWhite">
           {/* Anime title */}
           <div className="title">
-            {animeData.title ? (
+            {animeData?.title ? (
               <h1 className="text-textWhite text-3xl text-center min-[570px]:text-start font-semibold">
                 {animeData?.title}
               </h1>

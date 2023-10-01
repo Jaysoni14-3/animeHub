@@ -64,7 +64,6 @@ export default function AnimeDetailsRight({ animeData }) {
             </div>
           )}
         </div>
-
         <div className="score">
           {animeData.score && (
             <div className="flex items-start gap-2">

@@ -30,7 +30,7 @@ export default function AnimeImages({ id }) {
   };
 
   return (
-    <div className=" pb-2 ">
+    <div className="pb-2">
       <Swiper
         slidesPerView={2}
         centeredSlides={false}

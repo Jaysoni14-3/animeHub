@@ -21,7 +21,7 @@ export default function AnimeCard({ id, imageSrc, title, rating, type }) {
           {title}
         </p>
 
-        <div className="rating-duration-container mt-auto flex items-center">
+        <div className="rating-duration-container mt-2 flex items-center">
           {type && <p className="text-neutral-500">{type}</p>}
           {rating && (
             <p className="flex items-center text-neutral-400 ms-2">
