@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import AnimeCard from "../components/AnimeCard";
 import AnimePageSkeleton from "./Skeleton-pages/AnimePageSkeleton";
+import ApiErrorPage from "./ApiErrorPage";
 
 export default function AnimePage() {
   const [animeData, setAnimeData] = useState([]);
   const [hasNextPage, setNextPage] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [animeLoading, setAnimeLoading] = useState(false);
+  const [apiError, setApiError] = useState(false);
 
   useEffect(() => {
     getAllAnime(currentPage);
@@ -23,9 +25,9 @@ export default function AnimePage() {
       .then((response) => {
         if (response.status === 429) {
           console.log("429 occurred");
-          // setApiError(true);
+          setApiError(true);
         } else if (response.ok) {
-          // setApiError(false);
+          setApiError(false);
           return response.json();
         }
       })
@@ -41,7 +43,9 @@ export default function AnimePage() {
 
   return (
     <>
-      {animeLoading ? (
+      {apiError ? (
+        <ApiErrorPage />
+      ) : animeLoading ? (
         <AnimePageSkeleton />
       ) : (
         <div className="flex flex-col">

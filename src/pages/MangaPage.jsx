@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import VerticalMangaCard from "../components/VerticalMangaCard";
 import MangaPageSkeleton from "./Skeleton-pages/MangaPageSkeleton";
+import ApiErrorPage from "./ApiErrorPage";
 
 export default function MangaPage() {
   const [mangaData, setMangaData] = useState([]);
   const [hasNextPage, setNextPage] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [mangaLoading, setMangaLoading] = useState(false);
+  const [apiError, setApiError] = useState(false);
 
   useEffect(() => {
     getAllManga(currentPage);
@@ -23,7 +25,9 @@ export default function MangaPage() {
       .then((response) => {
         if (response.status === 429) {
           console.log("api error ");
+          setApiError(true);
         } else if (response.ok) {
+          setApiError(false);
           return response.json();
         }
       })
@@ -41,7 +45,9 @@ export default function MangaPage() {
 
   return (
     <>
-      {mangaLoading ? (
+      {apiError ? (
+        <ApiErrorPage />
+      ) : mangaLoading ? (
         <MangaPageSkeleton />
       ) : (
         <div className="flex flex-col">

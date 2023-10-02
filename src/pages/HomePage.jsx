@@ -4,6 +4,7 @@ import TopAnime from "../components/TopAnime";
 import UpComingAnime from "../components/UpComingAnime";
 import Manga from "../components/Manga";
 import HomePageSkeleton from "./Skeleton-pages/HomePageSkeleton";
+import ApiErrorPage from "./ApiErrorPage";
 
 export default function HomePage() {
   // data for TopAnime RecommendedAnimes PopularAnime is filtered from animeData
@@ -42,7 +43,6 @@ export default function HomePage() {
       })
       .then((result) => {
         setAnimeData(result?.data);
-        // setAnimeLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -101,20 +101,7 @@ export default function HomePage() {
     */
     <>
       {apiError ? (
-        <div className="flex flex-col items-center justify-center h-[32rem]">
-          <h1 className="text-3xl text-textWhite">
-            An error occured while loading the page
-          </h1>
-          <span className="text-neutral-400 mt-4 mb-2">
-            Please reload the page or press the button below
-          </span>
-          <button
-            onClick={() => window.location.reload()}
-            className="px-4 py-2 rounded text-lg text-textBlack bg-secondaryColor hover:bg-[rgb(255,233,108)] ease-in-out"
-          >
-            Reload
-          </button>
-        </div>
+        <ApiErrorPage />
       ) : animeLoading || upcommingloading || mangaLoading ? (
         <HomePageSkeleton />
       ) : (

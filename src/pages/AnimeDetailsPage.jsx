@@ -7,27 +7,26 @@ import RelatedAnime from "../components/AnimeDetailsComponents/RelatedAnime";
 import AnimeImages from "../components/AnimeDetailsComponents/AnimeImages";
 import Modal from "../components/Modal";
 import AnimeDetailsSkeleton from "./Skeleton-pages/AnimeDetailsSkeleton";
+import ApiErrorPage from "./ApiErrorPage";
 
 export default function AnimeDetailsPage() {
   const { id } = useParams();
   const [animeData, setAnimeData] = useState([]);
   // console.log(animeData);
+
   const [characterDetails, setCharactersDetails] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [apiError, setApiError] = useState(false);
 
   const [animeDetailsLoading, setAnimeDetailsLoading] = useState(false);
 
   var animeList;
-  // JSON.parse(localStorage.getItem("ANIME_WATCH_LIST")) || [];
 
   if (localStorage.getItem("ANIME_WATCH_LIST") !== null) {
     animeList = JSON.parse(localStorage.getItem("ANIME_WATCH_LIST"));
   } else {
-    // console.log("ANIME_WATCH_LIST has nothing in it");
     animeList = [];
   }
-
-  // console.log(animeList);
 
   useEffect(() => {
     getAnimeDetails(id);
@@ -52,7 +51,15 @@ export default function AnimeDetailsPage() {
   function getAnimeDetails(id) {
     setAnimeDetailsLoading(true);
     fetch(`https://api.jikan.moe/v4/anime/${id}/full`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 429) {
+          console.log("429 occurred");
+          setApiError(true);
+        } else if (response.ok) {
+          setApiError(false);
+          return response.json();
+        }
+      })
       .then((results) => {
         setAnimeData(results.data);
         setAnimeDetailsLoading(false);
@@ -64,7 +71,15 @@ export default function AnimeDetailsPage() {
 
   function getAnimeCharacters(id) {
     fetch(`https://api.jikan.moe/v4/anime/${id}/characters`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 429) {
+          console.log("429 occurred");
+          setApiError(true);
+        } else if (response.ok) {
+          setApiError(false);
+          return response.json();
+        }
+      })
       .then((results) => {
         setCharactersDetails(results.data);
       })
@@ -75,7 +90,9 @@ export default function AnimeDetailsPage() {
 
   return (
     <>
-      {animeDetailsLoading ? (
+      {apiError ? (
+        <ApiErrorPage />
+      ) : animeDetailsLoading ? (
         <AnimeDetailsSkeleton />
       ) : (
         <>

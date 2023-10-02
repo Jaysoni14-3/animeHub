@@ -9,7 +9,9 @@ import MangaDetailsPage from "./pages/MangaDetailsPage";
 import Footer from "./components/Footer";
 import WatchListPage from "./pages/WatchListPage";
 
+
 function App() {
+
   return (
     <>
       <div className="flex flex-col min-h-screen">
@@ -21,7 +23,6 @@ function App() {
             <Route path="/search" element={<SearchResults />} />
             <Route path="/manga" element={<MangaPage />} />
             <Route path="/anime-details/:id" element={<AnimeDetailsPage />} />
-
             <Route path="/manga-details/:id" element={<MangaDetailsPage />} />
             <Route path="/watch-list" element={<WatchListPage />} />
           </Routes>
